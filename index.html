@@ -37,6 +37,8 @@
     }
     .card.reserved { background: #f8fafc; opacity: 0.7; }
 
+    .card-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+
     .card-title { font-weight: 500; font-size: 1rem; margin-bottom: 10px; }
     
     .badge {
@@ -79,7 +81,7 @@
 <body>
 
   <header>
-    <h1>Nossa Lista de Enxoval 💒</h1>
+    <h1>Nossa Lista de coisinhas da casa 💒</h1>
     <p>Sua presença é o nosso maior presente! Se desejar nos presentear com algo para a nossa casa, escolha um item abaixo.</p>
   </header>
 
@@ -101,7 +103,7 @@
   </div>
 
   <script>
-    // Cole na linha abaixo o link do Apps Script que você copiou no Passo 2
+    // Cole a sua URL do Apps Script entre as aspas abaixo
     const API_URL = "https://script.google.com/macros/s/AKfycbzvmwLSCFo_rJim19D7jXrrY820iH9o-nx9dc46cYmAWMaylgOfl7D7kGZfp1mJCrPNtw/exec";
 
     let itemsData = [];
@@ -139,6 +141,7 @@
           
           card.innerHTML = `
             <div>
+              ${item.foto ? `<img src="${item.foto}" class="card-img" alt="${item.item}">` : ''}
               <span class="badge ${isReserved ? 'unavailable' : 'available'}">
                 ${isReserved ? 'Já Reservado' : 'Disponível'}
               </span>
