@@ -3,166 +3,540 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nossa Lista de Presentes 💒</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Nossa Lista de Enxoval & Casa Nova 🏠✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fdfbf7;
-      --card-bg: #ffffff;
-      --accent: #8b5cf6;
-      --accent-hover: #7c3aed;
-      --text: #2d3748;
-      --muted: #718096;
-      --success: #10b981;
-      --reserved: #cbd5e1;
+      --bg: #fcfbf9;
+      --surface: #ffffff;
+      --primary: #7c3aed;
+      --primary-light: #f3e8ff;
+      --primary-dark: #6d28d9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #f1f5f9;
+      --success-bg: #ecfdf5;
+      --success-text: #047857;
+      --reserved-bg: #f1f5f9;
+      --reserved-text: #64748b;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 12px 24px -6px rgba(0,0,0,0.06);
+      --radius: 16px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 20px; max-width: 900px; margin: 0 auto; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     
-    header { text-align: center; margin-bottom: 30px; padding: 20px 0; }
-    header h1 { font-size: 2rem; color: #4c1d95; margin-bottom: 8px; }
-    header p { color: var(--muted); font-size: 0.95rem; }
-
-    .category-title {
-      font-size: 1.25rem; font-weight: 600; color: #5b21b6;
-      margin: 25px 0 15px 0; border-bottom: 2px solid #ede9fe; padding-bottom: 5px;
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 24px 16px 60px;
+      max-width: 1040px;
+      margin: 0 auto;
+      line-height: 1.5;
     }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    /* Hero Header */
+    header {
+      text-align: center;
+      padding: 40px 20px 30px;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
+      border-radius: 24px;
+      border: 1px solid #ede9fe;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 30px;
+    }
+    
+    .header-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 30px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
 
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: #3b0764;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 580px;
+      margin: 0 auto 24px;
+    }
+
+    /* Progress Card */
+    .progress-container {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 16px 20px;
+      max-width: 480px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .progress-bar-bg {
+      background: #e2e8f0;
+      height: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, #a855f7, #7c3aed);
+      height: 100%;
+      width: 0%;
+      transition: width 0.8s ease-in-out;
+      border-radius: 10px;
+    }
+
+    /* Controls: Search & Category Filters */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .search-box {
+      width: 100%;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.95rem;
+      background: var(--surface);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-light);
+    }
+
+    .categories-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .categories-tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      padding: 10px 18px;
+      border-radius: 30px;
+      border: 1px solid #e2e8f0;
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    /* Cards */
     .card {
-      background: var(--card-bg); border-radius: 12px; padding: 18px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); display: flex;
-      flex-direction: column; justify-content: space-between; border: 1px solid #f1f5f9;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
-    .card.reserved { background: #f8fafc; opacity: 0.7; }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #ddd6fe;
+    }
+    .card.reserved {
+      background: #f8fafc;
+      opacity: 0.75;
+    }
+    .card.reserved:hover {
+      transform: none;
+      box-shadow: var(--shadow-sm);
+      border-color: var(--border);
+    }
 
-    .card-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+    /* Image Wrapper */
+    .card-img-wrapper {
+      width: 100%;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-img-placeholder {
+      font-size: 3rem;
+      user-select: none;
+    }
 
-    .card-title { font-weight: 500; font-size: 1rem; margin-bottom: 10px; }
-    
+    /* Status Badge */
     .badge {
-      display: inline-block; padding: 4px 10px; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 600; margin-bottom: 12px; width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      width: fit-content;
     }
-    .badge.available { background: #d1fae5; color: #065f46; }
-    .badge.unavailable { background: #e2e8f0; color: #475569; }
-
-    button {
-      background: var(--accent); color: white; border: none;
-      padding: 10px 15px; border-radius: 8px; font-weight: 500;
-      cursor: pointer; transition: background 0.2s; width: 100%;
+    .badge.available { background: var(--success-bg); color: var(--success-text); }
+    .badge.unavailable { background: var(--reserved-bg); color: var(--reserved-text); }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
     }
-    button:hover { background: var(--accent-hover); }
-    button:disabled { background: var(--reserved); cursor: not-allowed; }
 
-    /* Modal */
+    .card-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    /* Buttons */
+    .btn-presentear {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+    }
+    .btn-presentear:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+    }
+    .btn-presentear:disabled {
+      background: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Modal Overlay */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4); display: none; align-items: center;
-      justify-content: center; padding: 20px; z-index: 100;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+      animation: fadeIn 0.2s ease-out;
     }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
     .modal {
-      background: white; padding: 25px; border-radius: 16px;
-      width: 100%; max-width: 400px; text-align: center;
+      background: var(--surface);
+      padding: 30px 24px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+      animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .modal h3 { margin-bottom: 10px; font-size: 1.2rem; }
+    @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .modal-icon {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+
+    .modal h3 {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .modal p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
     .modal input {
-      width: 100%; padding: 12px; border: 1px solid #cbd5e1;
-      border-radius: 8px; margin: 15px 0; font-size: 1rem;
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
     }
-    .modal-buttons { display: flex; gap: 10px; }
-    .btn-secondary { background: #e2e8f0; color: #334155; }
-    .btn-secondary:hover { background: #cbd5e1; }
-    
-    .loading { text-align: center; font-size: 1.1rem; color: var(--muted); margin-top: 40px; }
+    .modal input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      flex: 1;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      flex: 1;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+    .empty-state {
+      text-align: center;
+      grid-column: 1 / -1;
+      padding: 50px 20px;
+      color: var(--text-muted);
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Nossa Lista de coisinhas da casa 💒</h1>
-    <p>Sua presença é o nosso maior presente! Se desejar nos presentear com algo para a nossa casa, escolha um item abaixo.</p>
+    <span class="header-badge">NOSSO ENXOVAL</span>
+    <h1>Lista de Presentes 🏡</h1>
+    <p>Sua presença é o nosso maior presente! Se quiser nos ajudar a montar o nosso lar, escolha um item abaixo.</p>
+    
+    <div class="progress-container">
+      <div class="progress-info">
+        <span>Progresso da Lista</span>
+        <span id="progress-text">0% concluído</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
   </header>
 
+  <div class="controls">
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="🔍 Procure por um presente..." oninput="handleSearch()">
+    </div>
+    <div class="categories-tabs" id="category-tabs">
+      <!-- Tabs geradas via JS -->
+    </div>
+  </div>
+
   <div id="app">
-    <div class="loading">Carregando itens da lista...</div>
+    <div class="loading">Carregando itens da lista com carinho... ✨</div>
   </div>
 
   <!-- Modal de Confirmação -->
   <div class="modal-overlay" id="modal">
     <div class="modal">
+      <div class="modal-icon">🎁</div>
       <h3 id="modal-item-title">Presentear</h3>
-      <p style="font-size: 0.85rem; color: var(--muted);">Digite seu nome para marcar este item como reservado:</p>
-      <input type="text" id="guest-name" placeholder="Seu nome completo" />
+      <p>Digite seu nome completo para confirmar e reservar este item:</p>
+      <input type="text" id="guest-name" placeholder="Seu nome aqui..." autocomplete="off" />
       <div class="modal-buttons">
         <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
-        <button id="btn-confirm-gift" onclick="confirmGift()">Confirmar</button>
+        <button class="btn-primary" id="btn-confirm-gift" onclick="confirmGift()">Confirmar</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Cole a sua URL do Apps Script entre as aspas abaixo
+    // Cole a sua URL do Apps Script entre as aspas na linha abaixo:
     const API_URL = "https://script.google.com/macros/s/AKfycbzvmwLSCFo_rJim19D7jXrrY820iH9o-nx9dc46cYmAWMaylgOfl7D7kGZfp1mJCrPNtw/exec";
 
     let itemsData = [];
     let selectedItemId = null;
+    let currentCategory = "Todos";
+    let searchQuery = "";
+
+    const categoryIcons = {
+      "Cozinha": "🍳",
+      "Quarto e Banheiro": "🛏️",
+      "Lavanderia": "🧺",
+      "Sala": "🛋️"
+    };
 
     async function loadItems() {
       try {
         const res = await fetch(API_URL);
         itemsData = await res.json();
+        updateProgress();
+        renderTabs();
         renderList();
       } catch (err) {
-        document.getElementById('app').innerHTML = '<div class="loading">Erro ao carregar a lista. Verifique a URL da API.</div>';
+        document.getElementById('app').innerHTML = '<div class="loading">❌ Ops! Erro ao carregar a lista. Verifique se a URL da API está correta no código.</div>';
       }
+    }
+
+    function updateProgress() {
+      if (!itemsData.length) return;
+      const reservedCount = itemsData.filter(i => i.status === 'Reservado').length;
+      const percent = Math.round((reservedCount / itemsData.length) * 100);
+      document.getElementById('progress-text').innerText = `${reservedCount} de ${itemsData.length} itens (${percent}%)`;
+      document.getElementById('progress-fill').style.width = `${percent}%`;
+    }
+
+    function renderTabs() {
+      const categories = ["Todos", ...new Set(itemsData.map(i => i.categoria))];
+      const tabsContainer = document.getElementById('category-tabs');
+      tabsContainer.innerHTML = '';
+
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = `tab-btn ${cat === currentCategory ? 'active' : ''}`;
+        btn.innerText = cat === "Todos" ? "✨ Todos os Itens" : `${categoryIcons[cat] || '📦'} ${cat}`;
+        btn.onclick = () => {
+          currentCategory = cat;
+          renderTabs();
+          renderList();
+        };
+        tabsContainer.appendChild(btn);
+      });
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase();
+      renderList();
     }
 
     function renderList() {
       const app = document.getElementById('app');
       app.innerHTML = '';
 
-      const categories = [...new Set(itemsData.map(i => i.categoria))];
-
-      categories.forEach(cat => {
-        const catTitle = document.createElement('div');
-        catTitle.className = 'category-title';
-        catTitle.innerText = cat;
-        app.appendChild(catTitle);
-
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-
-        itemsData.filter(i => i.categoria === cat).forEach(item => {
-          const isReserved = item.status === 'Reservado';
-          const card = document.createElement('div');
-          card.className = `card ${isReserved ? 'reserved' : ''}`;
-          
-          card.innerHTML = `
-            <div>
-              ${item.foto ? `<img src="${item.foto}" class="card-img" alt="${item.item}">` : ''}
-              <span class="badge ${isReserved ? 'unavailable' : 'available'}">
-                ${isReserved ? 'Já Reservado' : 'Disponível'}
-              </span>
-              <div class="card-title">${item.item}</div>
-            </div>
-            <button ${isReserved ? 'disabled' : ''} onclick="openModal('${item.id}', '${item.item}')">
-              ${isReserved ? 'Reservado' : 'Presentear'}
-            </button>
-          `;
-          grid.appendChild(card);
-        });
-
-        app.appendChild(grid);
+      const filtered = itemsData.filter(item => {
+        const matchesCat = currentCategory === "Todos" || item.categoria === currentCategory;
+        const matchesSearch = item.item.toLowerCase().includes(searchQuery);
+        return matchesCat && matchesSearch;
       });
+
+      if (filtered.length === 0) {
+        app.innerHTML = '<div class="empty-state">Nenhum item encontrado com esse nome ou categoria. 🔍</div>';
+        return;
+      }
+
+      const grid = document.createElement('div');
+      grid.className = 'grid';
+
+      filtered.forEach(item => {
+        const isReserved = item.status === 'Reservado';
+        const card = document.createElement('div');
+        card.className = `card ${isReserved ? 'reserved' : ''}`;
+
+        const icon = categoryIcons[item.categoria] || "🎁";
+        
+        const imgContent = item.foto 
+          ? `<img src="${item.foto}" class="card-img" alt="${item.item}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'card-img-placeholder\'>${icon}</span>';">` 
+          : `<span class="card-img-placeholder">${icon}</span>`;
+
+        card.innerHTML = `
+          <div>
+            <div class="card-img-wrapper">
+              ${imgContent}
+            </div>
+            <span class="badge ${isReserved ? 'unavailable' : 'available'}">
+              <span class="badge-dot"></span>
+              ${isReserved ? 'Já Reservado' : 'Disponível'}
+            </span>
+            <div class="card-title">${item.item}</div>
+          </div>
+          <button class="btn-presentear" ${isReserved ? 'disabled' : ''} onclick="openModal('${item.id}', '${item.item}')">
+            ${isReserved ? 'Reservado' : 'Presentear ❤️'}
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+
+      app.appendChild(grid);
     }
 
     function openModal(id, title) {
       selectedItemId = id;
-      document.getElementById('modal-item-title').innerText = `Presentear: ${title}`;
+      document.getElementById('modal-item-title').innerText = title;
       document.getElementById('guest-name').value = '';
       document.getElementById('modal').style.display = 'flex';
+      setTimeout(() => document.getElementById('guest-name').focus(), 100);
     }
 
     function closeModal() {
@@ -191,7 +565,7 @@
         const data = await res.json();
         
         if (data.status === 'success') {
-          alert('Muito obrigado pelo presente! ❤️');
+          alert('MUITO OBRIGADO! Seu carinho e seu presente significam muito para nós! ❤️');
           closeModal();
           loadItems();
         } else {
