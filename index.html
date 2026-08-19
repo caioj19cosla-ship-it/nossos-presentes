@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nossa Lista de Enxoval & Casa Nova 🏠✨</title>
+
+  <!-- Favicon e Meta Tags para redes sociais/WhatsApp -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+  <meta property="og:title" content="Nossa Lista de Enxoval & Casa Nova 🏠✨">
+  <meta property="og:description" content="Venha nos ajudar a montar o nosso cantinho! Escolha um item da nossa lista.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
@@ -45,7 +51,7 @@
       border-radius: 24px;
       border: 1px solid #ede9fe;
       box-shadow: var(--shadow-sm);
-      margin-bottom: 30px;
+      margin-bottom: 24px;
     }
     
     .header-badge {
@@ -74,6 +80,69 @@
       max-width: 580px;
       margin: 0 auto 24px;
     }
+
+    /* Card do PIX */
+    .pix-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%);
+      border: 1px solid #ddd6fe;
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pix-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #3b0764;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pix-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .pix-key-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px dashed #a855f7;
+      padding: 10px 16px;
+      border-radius: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .pix-key-text {
+      font-family: monospace;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      word-break: break-all;
+    }
+
+    .btn-copy-pix {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-copy-pix:hover { background: var(--primary-dark); }
 
     /* Progress Card */
     .progress-container {
@@ -301,22 +370,9 @@
     }
     @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-    .modal-icon {
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-    }
-
-    .modal h3 {
-      font-size: 1.25rem;
-      color: var(--text-main);
-      margin-bottom: 6px;
-    }
-
-    .modal p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
+    .modal-icon { font-size: 2.8rem; margin-bottom: 12px; }
+    .modal h3 { font-size: 1.25rem; color: var(--text-main); margin-bottom: 6px; }
+    .modal p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
 
     .modal input {
       width: 100%;
@@ -333,10 +389,7 @@
       box-shadow: 0 0 0 3px var(--primary-light);
     }
 
-    .modal-buttons {
-      display: flex;
-      gap: 12px;
-    }
+    .modal-buttons { display: flex; gap: 12px; }
     .btn-secondary {
       background: #f1f5f9;
       color: #475569;
@@ -346,7 +399,6 @@
       font-weight: 600;
       flex: 1;
       cursor: pointer;
-      transition: background 0.2s;
     }
     .btn-secondary:hover { background: #e2e8f0; }
 
@@ -359,22 +411,11 @@
       font-weight: 600;
       flex: 1;
       cursor: pointer;
-      transition: background 0.2s;
     }
     .btn-primary:hover { background: var(--primary-dark); }
 
-    .loading {
-      text-align: center;
-      padding: 60px 20px;
-      font-size: 1.1rem;
-      color: var(--text-muted);
-    }
-    .empty-state {
-      text-align: center;
-      grid-column: 1 / -1;
-      padding: 50px 20px;
-      color: var(--text-muted);
-    }
+    .loading { text-align: center; padding: 60px 20px; font-size: 1.1rem; color: var(--text-muted); }
+    .empty-state { text-align: center; grid-column: 1 / -1; padding: 50px 20px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -382,7 +423,7 @@
   <header>
     <span class="header-badge">NOSSO ENXOVAL</span>
     <h1>Lista de Presentes 🏡</h1>
-    <p>Sua presença é o nosso maior presente! Se quiser nos ajudar a montar o nosso lar, escolha um item abaixo.</p>
+    <p>Sua presença é o nosso maior presente! Se quiser nos ajudar a montar o nosso lar, escolha um item abaixo ou contribua via Pix.</p>
     
     <div class="progress-container">
       <div class="progress-info">
@@ -395,13 +436,22 @@
     </div>
   </header>
 
+  <!-- SEÇÃO DO PIX -->
+  <div class="pix-card">
+    <div class="pix-title">💳 Prefere presentear em dinheiro?</div>
+    <div class="pix-desc">Você pode fazer uma contribuição de qualquer valor via Pix para nos ajudar com as pequenas compras!</div>
+    <div class="pix-key-box">
+      <!-- ⚠️ MUDE A CHAVE PIX ABAIXO -->
+      <span class="pix-key-text" id="pix-key">84999877774</span>
+      <button class="btn-copy-pix" id="btn-copy-pix" onclick="copyPix()">Copiar Chave</button>
+    </div>
+  </div>
+
   <div class="controls">
     <div class="search-box">
       <input type="text" id="search-input" placeholder="🔍 Procure por um presente..." oninput="handleSearch()">
     </div>
-    <div class="categories-tabs" id="category-tabs">
-      <!-- Tabs geradas via JS -->
-    </div>
+    <div class="categories-tabs" id="category-tabs"></div>
   </div>
 
   <div id="app">
@@ -423,7 +473,7 @@
   </div>
 
   <script>
-    // Cole a sua URL do Apps Script entre as aspas na linha abaixo:
+    // ⚠️ COLE A SUA URL DO APPS SCRIPT ENTRE AS ASPAS NA LINHA ABAIXO:
     const API_URL = "https://script.google.com/macros/s/AKfycbzvmwLSCFo_rJim19D7jXrrY820iH9o-nx9dc46cYmAWMaylgOfl7D7kGZfp1mJCrPNtw/exec";
 
     let itemsData = [];
@@ -438,6 +488,21 @@
       "Sala": "🛋️"
     };
 
+    function copyPix() {
+      const pixKey = document.getElementById('pix-key').innerText;
+      navigator.clipboard.writeText(pixKey).then(() => {
+        const btn = document.getElementById('btn-copy-pix');
+        btn.innerText = 'Copiado! ✅';
+        btn.style.background = '#047857';
+        setTimeout(() => {
+          btn.innerText = 'Copiar Chave';
+          btn.style.background = 'var(--primary)';
+        }, 2500);
+      }).catch(err => {
+        alert('Não foi possível copiar automaticamente. Selecione a chave e copie manualmente!');
+      });
+    }
+
     async function loadItems() {
       try {
         const res = await fetch(API_URL);
@@ -446,7 +511,7 @@
         renderTabs();
         renderList();
       } catch (err) {
-        document.getElementById('app').innerHTML = '<div class="loading">❌ Ops! Erro ao carregar a lista. Verifique se a URL da API está correta no código.</div>';
+        document.getElementById('app').innerHTML = '<div class="loading">❌ Ops! Erro ao carregar a lista. Verifique a URL do Apps Script.</div>';
       }
     }
 
