@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossa Lista de Presentes 💒</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fdfbf7;
+      --card-bg: #ffffff;
+      --accent: #8b5cf6;
+      --accent-hover: #7c3aed;
+      --text: #2d3748;
+      --muted: #718096;
+      --success: #10b981;
+      --reserved: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 20px; max-width: 900px; margin: 0 auto; }
+    
+    header { text-align: center; margin-bottom: 30px; padding: 20px 0; }
+    header h1 { font-size: 2rem; color: #4c1d95; margin-bottom: 8px; }
+    header p { color: var(--muted); font-size: 0.95rem; }
+
+    .category-title {
+      font-size: 1.25rem; font-weight: 600; color: #5b21b6;
+      margin: 25px 0 15px 0; border-bottom: 2px solid #ede9fe; padding-bottom: 5px;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+
+    .card {
+      background: var(--card-bg); border-radius: 12px; padding: 18px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); display: flex;
+      flex-direction: column; justify-content: space-between; border: 1px solid #f1f5f9;
+    }
+    .card.reserved { background: #f8fafc; opacity: 0.7; }
+
+    .card-title { font-weight: 500; font-size: 1rem; margin-bottom: 10px; }
+    
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 600; margin-bottom: 12px; width: fit-content;
+    }
+    .badge.available { background: #d1fae5; color: #065f46; }
+    .badge.unavailable { background: #e2e8f0; color: #475569; }
+
+    button {
+      background: var(--accent); color: white; border: none;
+      padding: 10px 15px; border-radius: 8px; font-weight: 500;
+      cursor: pointer; transition: background 0.2s; width: 100%;
+    }
+    button:hover { background: var(--accent-hover); }
+    button:disabled { background: var(--reserved); cursor: not-allowed; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4); display: none; align-items: center;
+      justify-content: center; padding: 20px; z-index: 100;
+    }
+    .modal {
+      background: white; padding: 25px; border-radius: 16px;
+      width: 100%; max-width: 400px; text-align: center;
+    }
+    .modal h3 { margin-bottom: 10px; font-size: 1.2rem; }
+    .modal input {
+      width: 100%; padding: 12px; border: 1px solid #cbd5e1;
+      border-radius: 8px; margin: 15px 0; font-size: 1rem;
+    }
+    .modal-buttons { display: flex; gap: 10px; }
+    .btn-secondary { background: #e2e8f0; color: #334155; }
+    .btn-secondary:hover { background: #cbd5e1; }
+    
+    .loading { text-align: center; font-size: 1.1rem; color: var(--muted); margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Nossa Lista de Enxoval 💒</h1>
+    <p>Sua presença é o nosso maior presente! Se desejar nos presentear com algo para a nossa casa, escolha um item abaixo.</p>
+  </header>
+
+  <div id="app">
+    <div class="loading">Carregando itens da lista...</div>
+  </div>
+
+  <!-- Modal de Confirmação -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <h3 id="modal-item-title">Presentear</h3>
+      <p style="font-size: 0.85rem; color: var(--muted);">Digite seu nome para marcar este item como reservado:</p>
+      <input type="text" id="guest-name" placeholder="Seu nome completo" />
+      <div class="modal-buttons">
+        <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button id="btn-confirm-gift" onclick="confirmGift()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cole na linha abaixo o link do Apps Script que você copiou no Passo 2
+    const API_URL = "https://script.google.com/macros/s/AKfycbzvmwLSCFo_rJim19D7jXrrY820iH9o-nx9dc46cYmAWMaylgOfl7D7kGZfp1mJCrPNtw/exec";
+
+    let itemsData = [];
+    let selectedItemId = null;
+
+    async function loadItems() {
+      try {
+        const res = await fetch(API_URL);
+        itemsData = await res.json();
+        renderList();
+      } catch (err) {
+        document.getElementById('app').innerHTML = '<div class="loading">Erro ao carregar a lista. Verifique a URL da API.</div>';
+      }
+    }
+
+    function renderList() {
+      const app = document.getElementById('app');
+      app.innerHTML = '';
+
+      const categories = [...new Set(itemsData.map(i => i.categoria))];
+
+      categories.forEach(cat => {
+        const catTitle = document.createElement('div');
+        catTitle.className = 'category-title';
+        catTitle.innerText = cat;
+        app.appendChild(catTitle);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        itemsData.filter(i => i.categoria === cat).forEach(item => {
+          const isReserved = item.status === 'Reservado';
+          const card = document.createElement('div');
+          card.className = `card ${isReserved ? 'reserved' : ''}`;
+          
+          card.innerHTML = `
+            <div>
+              <span class="badge ${isReserved ? 'unavailable' : 'available'}">
+                ${isReserved ? 'Já Reservado' : 'Disponível'}
+              </span>
+              <div class="card-title">${item.item}</div>
+            </div>
+            <button ${isReserved ? 'disabled' : ''} onclick="openModal('${item.id}', '${item.item}')">
+              ${isReserved ? 'Reservado' : 'Presentear'}
+            </button>
+          `;
+          grid.appendChild(card);
+        });
+
+        app.appendChild(grid);
+      });
+    }
+
+    function openModal(id, title) {
+      selectedItemId = id;
+      document.getElementById('modal-item-title').innerText = `Presentear: ${title}`;
+      document.getElementById('guest-name').value = '';
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      selectedItemId = null;
+    }
+
+    async function confirmGift() {
+      const name = document.getElementById('guest-name').value.trim();
+      if (!name) {
+        alert('Por favor, digite seu nome!');
+        return;
+      }
+
+      const confirmBtn = document.getElementById('btn-confirm-gift');
+      confirmBtn.innerText = 'Salvando...';
+      confirmBtn.disabled = true;
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ id: selectedItemId, convidado: name })
+        });
+        
+        const data = await res.json();
+        
+        if (data.status === 'success') {
+          alert('Muito obrigado pelo presente! ❤️');
+          closeModal();
+          loadItems();
+        } else {
+          alert(data.message || 'Erro ao reservar item.');
+        }
+      } catch (err) {
+        alert('Erro ao conectar ao servidor. Tente novamente.');
+      } finally {
+        confirmBtn.innerText = 'Confirmar';
+        confirmBtn.disabled = false;
+      }
+    }
+
+    loadItems();
+  </script>
+</body>
+</html>
