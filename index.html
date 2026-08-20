@@ -30,6 +30,8 @@
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
       --shadow-md: 0 12px 24px -6px rgba(0,0,0,0.06);
       --radius: 16px;
+      --wa-color: #25d366;
+      --wa-hover: #1eae51;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -184,10 +186,7 @@
       margin-bottom: 28px;
     }
 
-    .search-box {
-      width: 100%;
-      position: relative;
-    }
+    .search-box { width: 100%; position: relative; }
     .search-box input {
       width: 100%;
       padding: 14px 18px;
@@ -258,15 +257,8 @@
       box-shadow: var(--shadow-md);
       border-color: #ddd6fe;
     }
-    .card.reserved {
-      background: #f8fafc;
-      opacity: 0.75;
-    }
-    .card.reserved:hover {
-      transform: none;
-      box-shadow: var(--shadow-sm);
-      border-color: var(--border);
-    }
+    .card.reserved { background: #f8fafc; opacity: 0.75; }
+    .card.reserved:hover { transform: none; box-shadow: var(--shadow-sm); border-color: var(--border); }
 
     /* Image Wrapper */
     .card-img-wrapper {
@@ -280,15 +272,8 @@
       align-items: center;
       justify-content: center;
     }
-    .card-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .card-img-placeholder {
-      font-size: 3rem;
-      user-select: none;
-    }
+    .card-img { width: 100%; height: 100%; object-fit: cover; }
+    .card-img-placeholder { font-size: 3rem; user-select: none; }
 
     /* Status Badge */
     .badge {
@@ -304,19 +289,9 @@
     }
     .badge.available { background: var(--success-bg); color: var(--success-text); }
     .badge.unavailable { background: var(--reserved-bg); color: var(--reserved-text); }
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
-    .card-title {
-      font-weight: 600;
-      font-size: 1.05rem;
-      color: var(--text-main);
-      margin-bottom: 16px;
-    }
+    .card-title { font-weight: 600; font-size: 1.05rem; color: var(--text-main); margin-bottom: 16px; }
 
     /* Buttons */
     .btn-presentear {
@@ -332,16 +307,8 @@
       width: 100%;
       box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
     }
-    .btn-presentear:hover {
-      background: var(--primary-dark);
-      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
-    }
-    .btn-presentear:disabled {
-      background: #cbd5e1;
-      color: #64748b;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+    .btn-presentear:hover { background: var(--primary-dark); box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3); }
+    .btn-presentear:disabled { background: #cbd5e1; color: #64748b; cursor: not-allowed; box-shadow: none; }
 
     /* Modal Overlay */
     .modal-overlay {
@@ -372,21 +339,28 @@
 
     .modal-icon { font-size: 2.8rem; margin-bottom: 12px; }
     .modal h3 { font-size: 1.25rem; color: var(--text-main); margin-bottom: 6px; }
-    .modal p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
+    .modal p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; }
 
     .modal input {
       width: 100%;
       padding: 14px;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-size: 1rem;
       outline: none;
       transition: border-color 0.2s;
     }
-    .modal input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--primary-light);
+    .modal input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+
+    .wa-notice {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 20px;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
     }
 
     .modal-buttons { display: flex; gap: 12px; }
@@ -413,6 +387,27 @@
       cursor: pointer;
     }
     .btn-primary:hover { background: var(--primary-dark); }
+
+    /* Botão estilo WhatsApp */
+    .btn-whatsapp {
+      background: var(--wa-color);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      margin-bottom: 12px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-whatsapp:hover { background: var(--wa-hover); transform: translateY(-2px); }
 
     .loading { text-align: center; padding: 60px 20px; font-size: 1.1rem; color: var(--text-muted); }
     .empty-state { text-align: center; grid-column: 1 / -1; padding: 50px 20px; color: var(--text-muted); }
@@ -458,26 +453,55 @@
     <div class="loading">Carregando itens da lista com carinho... ✨</div>
   </div>
 
-  <!-- Modal de Confirmação -->
+  <!-- Modal de Confirmação & Sucesso -->
   <div class="modal-overlay" id="modal">
     <div class="modal">
-      <div class="modal-icon">🎁</div>
-      <h3 id="modal-item-title">Presentear</h3>
-      <p>Digite seu nome completo para confirmar e reservar este item:</p>
-      <input type="text" id="guest-name" placeholder="Seu nome aqui..." autocomplete="off" />
-      <div class="modal-buttons">
-        <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
-        <button class="btn-primary" id="btn-confirm-gift" onclick="confirmGift()">Confirmar</button>
+      
+      <!-- Passo 1: Digitar Nome -->
+      <div id="modal-step-form">
+        <div class="modal-icon">🎁</div>
+        <h3 id="modal-item-title">Presentear</h3>
+        <p>Digite seu nome completo para confirmar e reservar este item:</p>
+        <input type="text" id="guest-name" placeholder="Seu nome aqui..." autocomplete="off" />
+        
+        <div class="wa-notice">
+          💬 Após confirmar, você será direcionado(a) para o WhatsApp para nos mandar uma mensagem!
+        </div>
+
+        <div class="modal-buttons">
+          <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button class="btn-primary" id="btn-confirm-gift" onclick="confirmGift()">Confirmar</button>
+        </div>
       </div>
+
+      <!-- Passo 2: Sucesso & Botão do WhatsApp -->
+      <div id="modal-step-success" style="display: none;">
+        <div class="modal-icon">🎉</div>
+        <h3>Reserva Confirmada!</h3>
+        <p id="success-desc">Muito obrigado pelo carinho! Clique no botão abaixo para nos avisar no WhatsApp:</p>
+        
+        <button class="btn-whatsapp" onclick="openWhatsApp()">
+          💬 Enviar mensagem no WhatsApp agora
+        </button>
+        
+        <button class="btn-secondary" style="width: 100%;" onclick="closeModal()">
+          Concluir / Fechar
+        </button>
+      </div>
+
     </div>
   </div>
 
   <script>
-    // ⚠️ COLE A SUA URL DO APPS SCRIPT ENTRE AS ASPAS NA LINHA ABAIXO:
+    // ⚠️ CONFIGURAÇÕES PESSOAIS:
     const API_URL = "https://script.google.com/macros/s/AKfycbzvmwLSCFo_rJim19D7jXrrY820iH9o-nx9dc46cYmAWMaylgOfl7D7kGZfp1mJCrPNtw/exec";
+    
+    // ⚠️ SEU NÚMERO DE WHATSAPP (Com Código do País 55 + DDD + Seu Número. Ex: 5585999999999)
+    const WHATSAPP_PHONE = "5585999999999"; 
 
     let itemsData = [];
     let selectedItemId = null;
+    let selectedItemTitle = "";
     let currentCategory = "Todos";
     let searchQuery = "";
 
@@ -586,7 +610,7 @@
             </span>
             <div class="card-title">${item.item}</div>
           </div>
-          <button class="btn-presentear" ${isReserved ? 'disabled' : ''} onclick="openModal('${item.id}', '${item.item}')">
+          <button class="btn-presentear" ${isReserved ? 'disabled' : ''} onclick="openModal('${item.id}', '${item.item.replace(/'/g, "\\'")}')">
             ${isReserved ? 'Reservado' : 'Presentear ❤️'}
           </button>
         `;
@@ -598,8 +622,14 @@
 
     function openModal(id, title) {
       selectedItemId = id;
+      selectedItemTitle = title;
       document.getElementById('modal-item-title').innerText = title;
       document.getElementById('guest-name').value = '';
+      
+      // Reseta para o formulário
+      document.getElementById('modal-step-form').style.display = 'block';
+      document.getElementById('modal-step-success').style.display = 'none';
+      
       document.getElementById('modal').style.display = 'flex';
       setTimeout(() => document.getElementById('guest-name').focus(), 100);
     }
@@ -607,6 +637,8 @@
     function closeModal() {
       document.getElementById('modal').style.display = 'none';
       selectedItemId = null;
+      selectedItemTitle = "";
+      loadItems(); // Recarrega a lista para mostrar o item como "Já Reservado"
     }
 
     async function confirmGift() {
@@ -630,9 +662,10 @@
         const data = await res.json();
         
         if (data.status === 'success') {
-          alert('MUITO OBRIGADO! Seu carinho e seu presente significam muito para nós! ❤️');
-          closeModal();
-          loadItems();
+          // Muda o modal para a tela de Sucesso / WhatsApp
+          document.getElementById('modal-step-form').style.display = 'none';
+          document.getElementById('modal-step-success').style.display = 'block';
+          document.getElementById('success-desc').innerText = `Obrigado(a) ${name}! Você reservou o item: "${selectedItemTitle}". Clique abaixo para nos enviar uma mensagem no WhatsApp:`;
         } else {
           alert(data.message || 'Erro ao reservar item.');
         }
@@ -642,6 +675,14 @@
         confirmBtn.innerText = 'Confirmar';
         confirmBtn.disabled = false;
       }
+    }
+
+    function openWhatsApp() {
+      const msg = `Olá! Reservei o item "${selectedItemTitle}" na lista do enxoval de vocês! ✨`;
+      
+      // Abre o WhatsApp com a mensagem preenchida automaticamente
+      const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
     }
 
     loadItems();
