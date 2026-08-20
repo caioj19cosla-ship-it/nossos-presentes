@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nossa Lista de Enxoval & Casa Nova 🏠✨</title>
 
-  <!-- Favicon e Meta Tags para redes sociais/WhatsApp -->
+  <!-- Favicon e Meta Tags -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
   <meta property="og:title" content="Nossa Lista de Enxoval & Casa Nova 🏠✨">
   <meta property="og:description" content="Venha nos ajudar a montar o nosso cantinho! Escolha um item da nossa lista.">
@@ -43,7 +43,6 @@
       line-height: 1.5;
     }
 
-    /* Hero Header */
     header {
       text-align: center;
       padding: 40px 20px 30px;
@@ -81,7 +80,6 @@
       margin: 0 auto 24px;
     }
 
-    /* Card do PIX */
     .pix-card {
       background: linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%);
       border: 1px solid #ddd6fe;
@@ -144,7 +142,6 @@
     }
     .btn-copy-pix:hover { background: var(--primary-dark); }
 
-    /* Progress Card */
     .progress-container {
       background: var(--surface);
       border-radius: 16px;
@@ -176,7 +173,6 @@
       border-radius: 10px;
     }
 
-    /* Controls: Search & Category Filters */
     .controls {
       display: flex;
       flex-direction: column;
@@ -232,14 +228,12 @@
       box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
     }
 
-    /* Grid Layout */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 20px;
     }
 
-    /* Cards */
     .card {
       background: var(--surface);
       border-radius: var(--radius);
@@ -260,15 +254,8 @@
     }
     .card.reserved {
       background: #f8fafc;
-      opacity: 0.75;
-    }
-    .card.reserved:hover {
-      transform: none;
-      box-shadow: var(--shadow-sm);
-      border-color: var(--border);
     }
 
-    /* Image Wrapper */
     .card-img-wrapper {
       width: 100%;
       height: 160px;
@@ -290,7 +277,6 @@
       user-select: none;
     }
 
-    /* Status Badge */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -318,7 +304,6 @@
       margin-bottom: 16px;
     }
 
-    /* Buttons */
     .btn-presentear {
       background: var(--primary);
       color: white;
@@ -336,14 +321,24 @@
       background: var(--primary-dark);
       box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
     }
-    .btn-presentear:disabled {
-      background: #cbd5e1;
-      color: #64748b;
-      cursor: not-allowed;
-      box-shadow: none;
+
+    .btn-cancel-link {
+      background: transparent;
+      color: #ef4444;
+      border: 1px solid #fca5a5;
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .btn-cancel-link:hover {
+      background: #fef2f2;
+      border-color: #ef4444;
     }
 
-    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -414,6 +409,18 @@
     }
     .btn-primary:hover { background: var(--primary-dark); }
 
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      flex: 1;
+      cursor: pointer;
+    }
+    .btn-danger:hover { background: #dc2626; }
+
     .loading { text-align: center; padding: 60px 20px; font-size: 1.1rem; color: var(--text-muted); }
     .empty-state { text-align: center; grid-column: 1 / -1; padding: 50px 20px; color: var(--text-muted); }
   </style>
@@ -441,8 +448,7 @@
     <div class="pix-title">💳 Prefere presentear em dinheiro?</div>
     <div class="pix-desc">Você pode fazer uma contribuição de qualquer valor via Pix para nos ajudar com as pequenas compras!</div>
     <div class="pix-key-box">
-      <!-- ⚠️ MUDE A CHAVE PIX ABAIXO -->
-      <span class="pix-key-text" id="pix-key">84999877774</span>
+      <span class="pix-key-text" id="pix-key">sua-chave-pix-aqui@email.com</span>
       <button class="btn-copy-pix" id="btn-copy-pix" onclick="copyPix()">Copiar Chave</button>
     </div>
   </div>
@@ -458,7 +464,7 @@
     <div class="loading">Carregando itens da lista com carinho... ✨</div>
   </div>
 
-  <!-- Modal de Confirmação -->
+  <!-- Modal de Confirmação de Presente -->
   <div class="modal-overlay" id="modal">
     <div class="modal">
       <div class="modal-icon">🎁</div>
@@ -472,9 +478,21 @@
     </div>
   </div>
 
+  <!-- Modal de Cancelamento de Reserva -->
+  <div class="modal-overlay" id="cancel-modal">
+    <div class="modal">
+      <div class="modal-icon">🔄</div>
+      <h3 id="cancel-modal-item-title">Cancelar Reserva</h3>
+      <p>Tem certeza que deseja cancelar a reserva deste item e disponibilizá-lo de volta na lista?</p>
+      <div class="modal-buttons">
+        <button class="btn-secondary" onclick="closeCancelModal()">Voltar</button>
+        <button class="btn-danger" id="btn-confirm-cancel" onclick="confirmCancelGift()">Sim, Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ⚠️ COLE A SUA URL DO APPS SCRIPT ENTRE AS ASPAS NA LINHA ABAIXO:
-    const API_URL = "https://script.google.com/macros/s/AKfycbzvmwLSCFo_rJim19D7jXrrY820iH9o-nx9dc46cYmAWMaylgOfl7D7kGZfp1mJCrPNtw/exec";
+    const API_URL = "COLE_SUA_URL_DO_APPS_SCRIPT_AQUI";
 
     let itemsData = [];
     let selectedItemId = null;
@@ -575,6 +593,10 @@
           ? `<img src="${item.foto}" class="card-img" alt="${item.item}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'card-img-placeholder\'>${icon}</span>';">` 
           : `<span class="card-img-placeholder">${icon}</span>`;
 
+        const actionButton = isReserved 
+          ? `<button class="btn-cancel-link" onclick="openCancelModal('${item.id}', '${item.item}')">Desfazer Reserva 🔄</button>` 
+          : `<button class="btn-presentear" onclick="openModal('${item.id}', '${item.item}')">Presentear ❤️</button>`;
+
         card.innerHTML = `
           <div>
             <div class="card-img-wrapper">
@@ -586,9 +608,7 @@
             </span>
             <div class="card-title">${item.item}</div>
           </div>
-          <button class="btn-presentear" ${isReserved ? 'disabled' : ''} onclick="openModal('${item.id}', '${item.item}')">
-            ${isReserved ? 'Reservado' : 'Presentear ❤️'}
-          </button>
+          ${actionButton}
         `;
         grid.appendChild(card);
       });
@@ -596,6 +616,7 @@
       app.appendChild(grid);
     }
 
+    /* Modal de Presentear */
     function openModal(id, title) {
       selectedItemId = id;
       document.getElementById('modal-item-title').innerText = title;
@@ -624,7 +645,7 @@
         const res = await fetch(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ id: selectedItemId, convidado: name })
+          body: JSON.stringify({ id: selectedItemId, convidado: name, action: 'reserve' })
         });
         
         const data = await res.json();
@@ -640,6 +661,47 @@
         alert('Erro ao conectar ao servidor. Tente novamente.');
       } finally {
         confirmBtn.innerText = 'Confirmar';
+        confirmBtn.disabled = false;
+      }
+    }
+
+    /* Modal de Cancelar Reserva */
+    function openCancelModal(id, title) {
+      selectedItemId = id;
+      document.getElementById('cancel-modal-item-title').innerText = title;
+      document.getElementById('cancel-modal').style.display = 'flex';
+    }
+
+    function closeCancelModal() {
+      document.getElementById('cancel-modal').style.display = 'none';
+      selectedItemId = null;
+    }
+
+    async function confirmCancelGift() {
+      const confirmBtn = document.getElementById('btn-confirm-cancel');
+      confirmBtn.innerText = 'Cancelando...';
+      confirmBtn.disabled = true;
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ id: selectedItemId, action: 'cancel' })
+        });
+        
+        const data = await res.json();
+        
+        if (data.status === 'success') {
+          alert('Reserva cancelada com sucesso. O item voltou a ficar disponível na lista!');
+          closeCancelModal();
+          loadItems();
+        } else {
+          alert(data.message || 'Erro ao cancelar reserva.');
+        }
+      } catch (err) {
+        alert('Erro ao conectar ao servidor. Tente novamente.');
+      } finally {
+        confirmBtn.innerText = 'Sim, Cancelar';
         confirmBtn.disabled = false;
       }
     }
